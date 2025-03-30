@@ -1,25 +1,26 @@
-import { Switch, Route } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
-import NotFound from "@/pages/not-found";
-import HomePage from "@/pages/home-page";
-import AuthPage from "@/pages/auth-page";
-import DashboardPage from "@/pages/dashboard-page";
-import CourseDetailPage from "@/pages/course-detail-page";
-import { ProtectedRoute } from "./lib/protected-route";
 
-function App() {
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Route, Switch } from "wouter";
+import { AuthProvider } from "@/hooks/use-auth";
+import { ThemeProvider } from "@/components/theme-provider";
+import { HomePage } from "@/pages/home-page";
+import { AuthPage } from "@/pages/auth-page";
+import { Toaster } from "@/components/ui/toaster";
+
+const queryClient = new QueryClient();
+
+export default function App() {
   return (
-    <>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/auth" component={AuthPage} />
-        <ProtectedRoute path="/dashboard" component={DashboardPage} />
-        <ProtectedRoute path="/courses/:id" component={CourseDetailPage} />
-        <Route component={NotFound} />
-      </Switch>
-      <Toaster />
-    </>
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <Switch>
+            <Route path="/" component={HomePage} />
+            <Route path="/auth" component={AuthPage} />
+          </Switch>
+          <Toaster />
+        </AuthProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
-
-export default App;

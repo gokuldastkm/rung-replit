@@ -64,7 +64,7 @@ export function Navbar() {
               ))}
             </div>
           </div>
-          
+
           <div className="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
             {!user ? (
               <>
@@ -81,7 +81,7 @@ export function Navbar() {
               </Button>
             )}
           </div>
-          
+
           <div className="flex items-center sm:hidden">
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
