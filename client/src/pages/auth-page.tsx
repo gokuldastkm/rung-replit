@@ -32,7 +32,7 @@ const registerSchema = insertUserSchema.extend({
 type LoginFormValues = z.infer<typeof loginSchema>;
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export default function AuthPage() {
+export function AuthPage() {
   const { login, user } = useAuth();
   const [_, navigate] = useLocation();
 

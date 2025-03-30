@@ -47,11 +47,19 @@ export function Navbar() {
 
   if (isAuthPage) {
     return (
-      <div className="py-4 px-6 border-b border-gray-200">
-        <span className="text-dark text-lg font-medium">Login</span>
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="py-4 px-6 border-b border-gray-200">
+          <span className="text-dark text-lg font-medium">Login</span>
+        </div>
+      </ThemeProvider>
     );
   }
+
+  const NavLink = ({ href, children }) => (
+    <div className="px-3 py-2">
+      <WouterLink href={href}>{children}</WouterLink>
+    </div>
+  );
 
   return (
     <ThemeProvider theme={theme}> {/* Added ThemeProvider */}
