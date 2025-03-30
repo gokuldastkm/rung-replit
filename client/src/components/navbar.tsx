@@ -1,4 +1,4 @@
-import { useLocation, Link } from "wouter";
+import { useLocation, Link as WouterLink } from "wouter";
 import { Logo } from "./ui/logo";
 import { Button } from "@/components/ui/button";
 import { useContext } from "react";
@@ -10,17 +10,26 @@ import {
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { ThemeProvider, createTheme } from '@mui/material/styles'; // Added ThemeProvider
+
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1976d2', // Example primary color
+    },
+  },
+});
+
 
 export function Navbar() {
   const [location] = useLocation();
-  // Try to access the AuthContext directly to avoid an error if it's not available
   const authContext = useContext(AuthContext);
   const user = authContext?.user || null;
   const logoutMutation = authContext?.logoutMutation;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
-    // Check if logoutMutation exists before calling mutate
     if (logoutMutation && typeof logoutMutation.mutate === 'function') {
       logoutMutation.mutate();
     }
@@ -45,22 +54,23 @@ export function Navbar() {
   }
 
   return (
+    <ThemeProvider theme={theme}> {/* Added ThemeProvider */}
     <nav className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/">
+            <WouterLink href="/"> {/* Changed Link to WouterLink */}
               <a className="flex-shrink-0 flex items-center">
                 <Logo />
               </a>
-            </Link>
+            </WouterLink>
             <div className="hidden md:ml-6 md:flex md:space-x-6">
               {navLinks.map((link) => (
-                <Link key={link.name} href={link.href}>
+                <WouterLink key={link.name} href={link.href}> {/* Changed Link to WouterLink */}
                   <a className="text-dark-muted hover:text-primary px-3 py-2 text-sm font-medium">
                     {link.name}
                   </a>
-                </Link>
+                </WouterLink>
               ))}
             </div>
           </div>
@@ -69,10 +79,10 @@ export function Navbar() {
             {!user ? (
               <>
                 <Button variant="ghost" asChild>
-                  <Link href="/auth">Login</Link>
+                  <WouterLink href="/auth">Login</WouterLink> {/* Changed Link to WouterLink */}
                 </Button>
                 <Button asChild>
-                  <Link href="/auth">Sign Up</Link>
+                  <WouterLink href="/auth">Sign Up</WouterLink> {/* Changed Link to WouterLink */}
                 </Button>
               </>
             ) : (
@@ -93,22 +103,22 @@ export function Navbar() {
               <SheetContent side="right">
                 <div className="flex flex-col space-y-4 mt-6">
                   {navLinks.map((link) => (
-                    <Link key={link.name} href={link.href}>
+                    <WouterLink key={link.name} href={link.href}> {/* Changed Link to WouterLink */}
                       <a 
                         className="text-dark-muted hover:text-primary px-3 py-2 text-sm font-medium"
                         onClick={() => setIsOpen(false)}
                       >
                         {link.name}
                       </a>
-                    </Link>
+                    </WouterLink>
                   ))}
                   {!user ? (
                     <>
                       <Button variant="ghost" asChild onClick={() => setIsOpen(false)}>
-                        <Link href="/auth">Login</Link>
+                        <WouterLink href="/auth">Login</WouterLink> {/* Changed Link to WouterLink */}
                       </Button>
                       <Button asChild onClick={() => setIsOpen(false)}>
-                        <Link href="/auth">Sign Up</Link>
+                        <WouterLink href="/auth">Sign Up</WouterLink> {/* Changed Link to WouterLink */}
                       </Button>
                     </>
                   ) : (
@@ -129,5 +139,6 @@ export function Navbar() {
         </div>
       </div>
     </nav>
+    </ThemeProvider> {/* Added ThemeProvider closing tag */}
   );
 }
