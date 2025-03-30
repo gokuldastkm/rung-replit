@@ -139,6 +139,6 @@ export function Navbar() {
         </div>
       </div>
     </nav>
-    </ThemeProvider> {/* Added ThemeProvider closing tag */}
+    </ThemeProvider>
   );
 }
