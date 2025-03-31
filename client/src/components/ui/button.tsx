@@ -29,11 +29,11 @@ const buttonVariants = {
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "default", asChild = false, ...props }, ref) => {
-    const Component = asChild ? Slot : "button"
+  ({ className, variant = "default", size = "default", asChild = false, children, ...props }, ref) => {
+    const Comp = asChild ? Slot : "button"
     
     return (
-      <Component
+      <Comp
         className={cn(
           buttonVariants.base,
           buttonVariants.variant[variant],
@@ -42,7 +42,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         ref={ref}
         {...props}
-      />
+      >
+        <span className="inline-flex items-center justify-center">
+          {children}
+        </span>
+      </Comp>
     )
   }
 )
